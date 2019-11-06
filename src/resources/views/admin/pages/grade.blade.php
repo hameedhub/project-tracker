@@ -2,7 +2,6 @@
 
 @section('content')
 
-
     <div class="container">
         <div class="row justify-content-center">
             <div class="col-md-8">
@@ -62,14 +61,19 @@
                                     <button type="submit" class="btn btn-primary">
                                         {{ __('Save') }}
                                     </button>
-    
-                                    
                                 </div>
                             </div>
-                        </form>
+                            
+                     </form>
 
 
                     </div>
+                    @if(session('success'))
+                            <div class="alert alert-success"> {{session('success')}} </div>
+                             @endif
+                             @if(session('error'))
+                             <div class="alert alert-danger"> {{session('error')}} </div>
+                     @endif
                 </div>
             </div>
         

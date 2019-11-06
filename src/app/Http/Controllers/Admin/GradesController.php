@@ -105,6 +105,6 @@ class GradesController extends Controller
         $delete = route('grades.destroy',['id', $id]);
         $grade = Grade::find($id);
         $grade->destroy($id);
-        return redirect('admin/grades')->with('success', 'Grade was successfully deleted');
+        return redirect('admin/grades');
     }
 }
