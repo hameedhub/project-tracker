@@ -15,7 +15,7 @@ class GradesController extends Controller
      */
     public function index()
     {
-        $grades = Grade::all();
+        $grades = Grade::orderBy('created_at', 'desc')->get();
         return view('admin.pages.grade')->with('grades', $grades);
     }
 
@@ -37,7 +37,18 @@ class GradesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+            'grade_name' => 'required',
+            'max' => 'required',
+            'min' => 'required'
+        ]);
+
+        $grade = new Grade;
+        $grade->grade_name = $request->input('grade_name');
+        $grade->max = $request->input('max');
+        $grade->min = $request->input('min');
+        $grade->save();
+        return redirect('admin/grades')->with('success', 'Grade was successfully saved');
     }
 
     /**
@@ -59,7 +70,11 @@ class GradesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $action = route('grades.update', ['id' => $id]);
+        $grade = Grade::find($id);
+        $grades = Grade::orderBy('created_at', 'desc')->get();
+       return view('admin.pages.grade_edit')->with(array('grade'=>$grade, 
+       'grades'=>$grades, 'action'=> $action));
     }
 
     /**
@@ -71,7 +86,12 @@ class GradesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $grade = Grade::find($id);
+        $grade->grade_name = $request->input('grade_name');
+        $grade->max = $request->input('max');
+        $grade->min = $request->input('min');
+        $grade->save();
+        return redirect('admin/grades')->with('success', 'Grade was successfully updated');
     }
 
     /**
@@ -82,6 +102,9 @@ class GradesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $delete = route('grades.destroy',['id', $id]);
+        $grade = Grade::find($id);
+        $grade->destroy($id);
+        return redirect('admin/grades')->with('success', 'Grade was successfully deleted');
     }
 }
