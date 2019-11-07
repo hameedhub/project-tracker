@@ -24,7 +24,7 @@ class AssessmentsController extends Controller
      */
     public function create()
     {
-        //
+        return view('facilitator.assessment_add');
     }
 
     /**
