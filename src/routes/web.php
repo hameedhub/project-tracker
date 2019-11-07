@@ -20,3 +20,4 @@ Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('admin/grades', 'Admin\GradesController');
 Route::resource('admin/courses', 'Admin\CoursesController');
+Route::resource('facilitator/assessment', 'Facilitator\AssessmentsController');

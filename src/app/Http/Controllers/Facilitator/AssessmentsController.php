@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Facilitator;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class Assessment extends Controller
+class AssessmentsController extends Controller
 {
     /**
      * Display a listing of the resource.
