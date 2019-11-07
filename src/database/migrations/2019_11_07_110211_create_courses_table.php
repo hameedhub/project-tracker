@@ -18,7 +18,7 @@ class CreateCoursesTable extends Migration
             $table->string('title');
             $table->string('description');
             $table->longText('objectives');
-            $table->integar('facilitator_id');
+            $table->integer('facilitator_id');
             $table->timestamps();
         });
     }

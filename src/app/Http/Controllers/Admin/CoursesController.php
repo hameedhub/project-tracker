@@ -4,6 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use DB;
+use App\Course;
+use App\User;
 
 class CoursesController extends Controller
 {
@@ -14,7 +17,17 @@ class CoursesController extends Controller
      */
     public function index()
     {
-        //
+
+         
+        $facilitators = User::all();
+        $course = DB::table('courses')
+        ->join('users', 'users.id', '=', 'courses.facilitator_id')
+        ->select('users.first_name', 'users.last_name', 'courses.id', 'courses.title', 'courses.description')
+        ->get();
+       return view('admin.pages.courses')->with(array(
+           'facilitators'=> $facilitators,
+           'courses'=> $course
+    ));
     }
 
     /**
@@ -24,7 +37,12 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        //
+        $facilitators = User::all();
+        $course = Course::orderBy('created_at', 'desc')->get();
+       return view('admin.pages.course_add')->with(array(
+           'facilitators'=> $facilitators,
+           'courses'=> $course
+    ));
     }
 
     /**
@@ -35,7 +53,21 @@ class CoursesController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, 
+        [
+            'title' => ['required', 'string', 'min:3', 'max:255'],
+            'description' =>['required', 'min:10', 'max:255'],
+            'objectives' => ['required', 'string', 'min:10'],
+            'facilitator_id'=> ['required']
+        ]);
+        
+        $course = new Course();
+        $course->title = $request->input('title');
+        $course->description = $request->input('description');
+        $course->objectives = $request->input('objectives');
+        $course->facilitator_id = $request->input('facilitator_id');
+        $course->save();
+        return redirect('admin/courses/create')->with('success', 'Course was successfully added');
     }
 
     /**
@@ -57,7 +89,19 @@ class CoursesController extends Controller
      */
     public function edit($id)
     {
-        //
+        $facilitators = User::all();
+        $action = route('courses.update', ['id'=> $id]);
+        $course = DB::table('courses')
+        ->join('users', 'users.id', '=', 'courses.facilitator_id')
+        ->where('courses.id', '=', $id)
+        ->select('users.first_name', 'users.last_name', 'courses.id', 
+        'courses.title', 'courses.description', 'courses.objectives',
+        'courses.facilitator_id'
+        )
+        ->get();
+
+
+       return view('admin.pages.course_edit')->with(array('action'=> $action, 'course' =>$course, 'facilitators'=> $facilitators));
     }
 
     /**
@@ -69,7 +113,21 @@ class CoursesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'title' => ['required', 'string', 'min:3', 'max:255'],
+            'description' =>['required', 'min:10', 'max:255'],
+            'objectives' => ['required', 'string', 'min:10'],
+            'facilitator_id'=> ['required']
+        ]);
+
+        $course = Course::find($id);
+        $course->title = $request->input('title');
+        $course->description = $request->input('description');
+        $course->objectives = $request->input('objectives');
+        $course->facilitator_id = $request->input('facilitator_id');
+        $course->save();
+        return redirect('admin/courses/'.$id.'/edit')->with('success', 'Course was successfully updated!');
+        
     }
 
     /**
