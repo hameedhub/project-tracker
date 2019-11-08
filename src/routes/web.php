@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/facilitator', function(){
-    return view('facilitator.dashboard');
-});
+Route::get('/facilitator/dashboard/{id}', 'Facilitator\DashboardController@index');
 
 Auth::routes();
 
