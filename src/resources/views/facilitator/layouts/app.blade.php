@@ -124,9 +124,9 @@ body {
 
 <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
-    <a class="nav-link active" href="#">Dashboard</a>
-    <a class="nav-link" href="#"> Course</a>
-    <a class="nav-link" href="#">Assessment</a>
+  <a class="nav-link active" href="">Dashboard</a>
+  <a class="nav-link" href=""> Course</a>
+    <a class="nav-link" href="{{ route('evaluation.index')}}">Assessment</a>
     <a class="nav-link" href="#">Submission</a>
     <a class="nav-link" href="#">Note</a>
     <a class="nav-link" href="#">Notification</a>
