@@ -24,3 +24,5 @@ Route::resource('admin/grades', 'Admin\GradesController');
 Route::resource('admin/courses', 'Admin\CoursesController');
 Route::resource('facilitator/assessment', 'Facilitator\AssessmentsController');
 Route::resource('student/registration', 'Student\RegCourseController');
+Route::resource('student/submission', 'Student\SubmissionController');
+Route::resource('student/assessment', 'Student\AssessmentController');
