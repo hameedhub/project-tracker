@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Student;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Submission;
+use App\Report;
+use DB;
 
 class SubmissionController extends Controller
 {
@@ -15,7 +17,16 @@ class SubmissionController extends Controller
      */
     public function index()
     {
-        //
+        $report = DB::table('reports')
+        ->join('assessments', 'assessments.id', '=', 'reports.assessment_id')
+        ->join('grades', 'grades.id', '=', 'reports.grade_id')
+        ->join('users', 'users.id', '=', 'reports.facilitator_id')
+        ->where('reports.student_id',1)
+        ->select('assessments.title', 'users.first_name', 'users.last_name',
+                'reports.score', 'reports.remark', 'grades.max')
+        ->orderBy('reports.created_at', 'desc')
+        ->get();
+        return view('facilitator.report')->with('reports', $report);
     }
 
     /**

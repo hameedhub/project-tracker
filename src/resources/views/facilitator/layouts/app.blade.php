@@ -116,7 +116,7 @@ body {
     <ul class="navbar-nav mr-auto">
       
     </ul>
-    <a class="nav-link" href="#" style="color:white">My Account</a>
+  <a class="nav-link" href="{{ route('dashboard.show', ['id'=> 'profile'])}}" style="color:white">My Account</a>
       <button class="btn btn-outline-default" type="submit">Logout</button>
     
   </div>

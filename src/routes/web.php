@@ -20,6 +20,7 @@ Route::get('/facilitator/dashboard/{id}', 'Facilitator\DashboardController@index
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('dashboard', 'DashboardController');
 Route::resource('admin/grades', 'Admin\GradesController');
 Route::resource('admin/courses', 'Admin\CoursesController');
 Route::resource('facilitator/evaluation', 'Facilitator\AssessmentsController');
