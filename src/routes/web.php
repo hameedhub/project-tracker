@@ -23,7 +23,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('admin/grades', 'Admin\GradesController');
 Route::resource('admin/courses', 'Admin\CoursesController');
 Route::resource('facilitator/evaluation', 'Facilitator\AssessmentsController');
-Route::resource('facilitator/submission', 'Facilitator\ReportsController');
+Route::resource('facilitator/submitted', 'Facilitator\ReportsController');
 Route::resource('student/registration', 'Student\RegCourseController');
 Route::resource('student/submission', 'Student\SubmissionController');
 Route::resource('student/assessment', 'Student\AssessmentController');

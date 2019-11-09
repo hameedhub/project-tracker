@@ -16,10 +16,12 @@ class CreateReportsTable extends Migration
         Schema::create('reports', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->integer('assessment_id');
+            $table->integer('submission_id');
             $table->integer('student_id');
             $table->integer('grade_id');
             $table->integer('score');
             $table->string('remark');
+            $table->integer('facilitator_id');
             $table->timestamps();
         });
     }

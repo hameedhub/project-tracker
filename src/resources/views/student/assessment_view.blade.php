@@ -75,7 +75,7 @@
                       <label for="note" class="col-md-2 col-form-label text-md-right">{{ __('Notes') }}</label>
             
                       <div class="col-md-8">
-                          <textarea id="note" rows="3" class="form-control @error('note') is-invalid @enderror" name="note"> @if(count($submission)>0){{$submission[0]->note}}@endif</textarea>
+                          <textarea id="note" rows="3" class="form-control @error('note') is-invalid @enderror" name="note">@if(count($submission)>0){{$submission[0]->note}}@endif</textarea>
             
                           @error('note')
                               <span class="invalid-feedback" role="alert">

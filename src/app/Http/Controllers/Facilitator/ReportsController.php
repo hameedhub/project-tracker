@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Submission;
 use App\Assessment;
 use App\Course;
+use App\Grade;
+use App\Report;
 use DB;
 
 class ReportsController extends Controller
@@ -49,7 +51,25 @@ class ReportsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'assessment_id' => ['required'],
+            'student_id'=> ['required'],
+            'grade_id' => ['required'],
+            'score' => ['required'],
+            'remark' => ['required'],
+        ]);
+
+        $report = new Report();
+        $report->assessment_id = $request->input('assessment_id');
+        $report->submission_id = $request->input('id');
+        $report->student_id = $request->input('student_id');
+        $report->grade_id = $request->input('grade_id');
+        $report->score = $request->input('score');
+        $report->remark = $request->input('remark');
+        $report->facilitator_id = 1;
+        $report->save();
+        return redirect('facilitator/submitted/'.$request->id)->with(
+            'success', 'Grade was successfuly saved');
     }
 
     /**
@@ -60,16 +80,29 @@ class ReportsController extends Controller
      */
     public function show($id)
     {
+        $grades = Grade::all();
+        $action = '';
         $submission = DB::table('submissions')
                         ->join('users', 'users.id', '=', 'submissions.student_id')
-                        ->join('assessments', 'assessments.id', '=', 'assessment_id')
+                        ->join('assessments', 'assessments.id', '=', 'submissions.assessment_id')
                         ->where('submissions.id', $id )
                         ->select('users.first_name', 'users.last_name',
                          'assessments.title', 'assessments.question',
                           'submissions.id', 'submissions.solution', 'submissions.note',
+                          'submissions.student_id', 'submissions.assessment_id',
                           'submissions.updated_at', 'submissions.created_at')
                          ->get();
-        return view('facilitator.submission_view')->with('submission', $submission);
+        $grade='';
+        $report = Report::where([
+            'submission_id'=> $submission[0]->id,
+            'student_id'=> $submission[0]->student_id
+                        ])->get();
+        if(count($report)>0){
+            $grade = Grade::find($report[0]->grade_id);
+        };
+        return view('facilitator.submission_view')->with(
+            array('submission'=> $submission, 'grades'=> $grades, 'report'=>$report,
+             'grade'=> $grade));
     }
 
     /**
@@ -92,7 +125,21 @@ class ReportsController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'assessment_id' => ['required'],
+            'grade_id' => ['required'],
+            'score' => ['required'],
+            'remark' => ['required'],
+        ]);
+
+        $report = Report::find($id);
+        $report->grade_id = $request->input('grade_id');
+        $report->score = $request->input('score');
+        $report->remark = $request->input('remark');
+        $report->facilitator_id = 1;
+        $report->save();
+        return redirect('facilitator/submitted/'.$request->id)->with(
+            'success', 'Grade was successfuly updated');
     }
 
     /**

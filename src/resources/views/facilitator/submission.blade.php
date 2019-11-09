@@ -23,7 +23,7 @@
                                         <td>{{ $submission->title }}</td>
                                         <td>{{ $submission->first_name }}</td>
                                         <td>{{ $submission->last_name }}</td>
-                                        <td><a href="submission/{{$submission->id}}" class="btn btn-sm btn-success" style="color:white">view</button></td>
+                                        <td><a href="{{ route('submitted.show', ['id' => $submission->id])}}" class="btn btn-sm btn-success" style="color:white">view</button></td>
                                               </tr>
                                         @endforeach
                                  

@@ -127,7 +127,7 @@ body {
   <a class="nav-link active" href="">Dashboard</a>
   <a class="nav-link" href=""> Course</a>
     <a class="nav-link" href="{{ route('evaluation.index')}}">Assessment</a>
-    <a class="nav-link" href="#">Submission</a>
+  <a class="nav-link" href="{{ route('submitted.index') }}">Submission</a>
     <a class="nav-link" href="#">Note</a>
     <a class="nav-link" href="#">Notification</a>
   </nav>
