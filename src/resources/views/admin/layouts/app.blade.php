@@ -134,7 +134,7 @@ body {
 <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
   <a class="nav-link active" href="">Dashboard</a>
-  <a class="nav-link" href=""> Users </a>
+  <a class="nav-link" href="{{ route('users.index')}}"> Users </a>
   <a class="nav-link" href="{{ route('courses.index')}}"> Course</a>
   <a class="nav-link" href="{{ route('grades.index')}}">Grade</a>
     <a class="nav-link" href="#">Notification</a>
