@@ -107,7 +107,7 @@ body {
   
   <body class="bg-light">
     <nav class="navbar navbar-expand-lg fixed-top navbar-dark bg-dark">
-  <a class="navbar-brand mr-auto mr-lg-0" href="#">Offcanvas navbar</a>
+    <a class="navbar-brand mr-auto mr-lg-0" href="#">{{ Auth::user()->first_name .' '.Auth::user()->last_name }}</a>
   <button class="navbar-toggler p-0 border-0" type="button" data-toggle="offcanvas">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -116,19 +116,28 @@ body {
     <ul class="navbar-nav mr-auto">
       
     </ul>
-  <a class="nav-link" href="{{ route('dashboard.show', ['id'=> 'profile'])}}" style="color:white">My Account</a>
-      <button class="btn btn-outline-default" type="submit">Logout</button>
-    
+    <a class="nav-link" href="../profile" style="color:white">My Account</a>
+
+      
+    <button class="btn btn-outline-default" href="{{ route('logout') }}"
+                                     onclick="event.preventDefault();
+                                                   document.getElementById('logout-form').submit();">
+                                      {{ __('Logout') }}
+</button>
+
+                                  <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                      @csrf
+                                  </form>
   </div>
 </nav>
 
 <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
   <a class="nav-link active" href="">Dashboard</a>
-  <a class="nav-link" href=""> Course</a>
+  <a class="nav-link" href="{{ route('course.index') }}"> Course</a>
     <a class="nav-link" href="{{ route('evaluation.index')}}">Assessment</a>
   <a class="nav-link" href="{{ route('submitted.index') }}">Submission</a>
-    <a class="nav-link" href="#">Note</a>
+    {{-- <a class="nav-link" href="#">Note</a> --}}
     <a class="nav-link" href="#">Notification</a>
   </nav>
 </div>
@@ -137,7 +146,7 @@ body {
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
         <img class="mr-3" src="/docs/4.3/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
         <div class="lh-100">
-        <h6 class="mb-0 text-white lh-100">{{config('app.name')}}</h6>
+        <h6 class="mb-0 text-white lh-100">{{config('app.name')}} - Facilitator </h6>
           <small>Created by <a style="color:grey" href="https://github.com/hameedhub">Dev</a></small>
         </div>
       </div>

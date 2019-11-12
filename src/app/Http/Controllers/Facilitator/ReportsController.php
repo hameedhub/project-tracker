@@ -13,6 +13,9 @@ use DB;
 
 class ReportsController extends Controller
 {
+    public function __construct (){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -20,7 +23,8 @@ class ReportsController extends Controller
      */
     public function index()
     {
-        $courses = Course::where('facilitator_id', 1)->pluck('id');
+        $user_id = auth()->user()->id;
+        $courses = Course::where('facilitator_id', $user_id)->pluck('id');
         $submission = DB::table('submissions')
                         ->join('users', 'users.id', '=', 'submissions.student_id')
                         ->join('assessments', 'assessments.id', '=', 'assessment_id')
@@ -136,7 +140,6 @@ class ReportsController extends Controller
         $report->grade_id = $request->input('grade_id');
         $report->score = $request->input('score');
         $report->remark = $request->input('remark');
-        $report->facilitator_id = 1;
         $report->save();
         return redirect('facilitator/submitted/'.$request->id)->with(
             'success', 'Grade was successfuly updated');

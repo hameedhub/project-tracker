@@ -10,6 +10,9 @@ use DB;
 
 class AssessmentsController extends Controller
 {
+    public function __construct (){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -23,7 +26,8 @@ class AssessmentsController extends Controller
         //     ->where('assessments.facilitator_id', '=', 1)
         //     ->selectRaw('*, c');
         // })->get();
-        $assessments = Assessment::where('facilitator_id', '1')->orderBy('created_at', 'desc')->get();
+        $user_id = auth()->user()->id;
+        $assessments = Assessment::where('facilitator_id', $user_id)->orderBy('created_at', 'desc')->get();
        return view('facilitator.assessment')->with('assessments', $assessments);
     }
 
@@ -34,7 +38,8 @@ class AssessmentsController extends Controller
      */
     public function create()
     {
-        $course = Course::where('facilitator_id', 1)->get();
+        $user_id = auth()->user()->id;
+        $course = Course::where('facilitator_id',$user_id )->get();
         return view('facilitator.assessment_add')->with('courses', $course);
     }
 
@@ -46,6 +51,7 @@ class AssessmentsController extends Controller
      */
     public function store(Request $request)
     {
+        $user_id = auth()->user()->id;
         $this->validate($request, [
             'course_id'=>['required'],
             'title'=> ['required', 'min:3', 'max:255'],
@@ -58,7 +64,7 @@ class AssessmentsController extends Controller
         $assessment->question = $request->input('question');
         $assessment->due_date = $request->input('due_date');
         $assessment->course_id = $request->input('course_id');
-        $assessment->facilitator_id = 1;
+        $assessment->facilitator_id = $user_id;
         $assessment->save();
 
         return redirect('facilitator.assessment');
@@ -83,8 +89,9 @@ class AssessmentsController extends Controller
      */
     public function edit($id)
     {
-        $action = route('assessment.update', ['id'=> $id]);
-        $courses = Course::where('facilitator_id', 1)->get();
+        $user_id = auth()->user()->id;
+        $action = route('evaluation.update', ['id'=> $id]);
+        $courses = Course::where('facilitator_id', $user_id)->get();
         $assessment = Assessment::find($id);
         $course = Course::where('id', $assessment->course_id)->get();
         return view('facilitator.assessment_edit')->with(array(
@@ -115,10 +122,9 @@ class AssessmentsController extends Controller
         $assessment->question = $request->input('question');
         $assessment->due_date = $request->input('due_date');
         $assessment->course_id = $request->input('course_id');
-        $assessment->facilitator_id = 1;
         $assessment->save();
 
-        return redirect('facilitator/assessment/'.$id.'/edit');
+        return redirect('facilitator/evaluation/'.$id.'/edit');
     }
 
     /**

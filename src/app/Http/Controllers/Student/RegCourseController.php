@@ -10,6 +10,10 @@ use DB;
 
 class RegCourseController extends Controller
 {
+
+    public function __construct (){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +21,6 @@ class RegCourseController extends Controller
      */
     public function index()
     {
-
         $courses = Course::orderBy('created_at', 'desc')->get();
         return view('student.registration')->with('courses', $courses);
     }

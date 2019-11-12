@@ -1,18 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Student;
+namespace App\Http\Controllers\Facilitator;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Assessment;
-use App\Submission;
-use DB;
+use App\Course;
 
-class AssessmentController extends Controller
+class CourseController extends Controller
 {
-    public function __construct (){
-        $this->middleware('auth');
-    }
     /**
      * Display a listing of the resource.
      *
@@ -21,14 +16,8 @@ class AssessmentController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        
-        $course = DB::table('registrations')
-        ->join('courses', 'courses.id', '=', 'registrations.student_id')
-        ->where('registrations.student_id',$user_id)
-        ->pluck('registrations.course_id');
-
-        $assessments = Assessment::whereIn('course_id', $course)->orderBy('created_at', 'desc')->get();
-        return view('student.assessment')->with('assessments', $assessments);
+        $courses = Course::where('facilitator_id', $user_id)->orderBy('created_at', 'desc')->get();
+        return view('facilitator.course')->with('courses', $courses);
     }
 
     /**
@@ -60,16 +49,9 @@ class AssessmentController extends Controller
      */
     public function show($id)
     {
+        $course = Course::find($id);
 
-        $assessment = Assessment::find($id);
-        $submission = Submission::where([
-            'assessment_id'=> $assessment->id
-        ])->get();
-        
-        return view('student.assessment_view')->with(array(
-            'assessment'=>$assessment,
-            'submission' => $submission
-        ));
+        return view('facilitator.course_view')->with('course', $course);
     }
 
     /**

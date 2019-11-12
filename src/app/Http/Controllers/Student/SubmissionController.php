@@ -17,11 +17,13 @@ class SubmissionController extends Controller
      */
     public function index()
     {
+        $user_id = auth()->user()->id;
+
         $report = DB::table('reports')
         ->join('assessments', 'assessments.id', '=', 'reports.assessment_id')
         ->join('grades', 'grades.id', '=', 'reports.grade_id')
         ->join('users', 'users.id', '=', 'reports.facilitator_id')
-        ->where('reports.student_id',1)
+        ->where('reports.student_id',$user_id)
         ->select('assessments.title', 'users.first_name', 'users.last_name',
                 'reports.score', 'reports.remark', 'grades.max')
         ->orderBy('reports.created_at', 'desc')
@@ -48,6 +50,8 @@ class SubmissionController extends Controller
     public function store(Request $request)
     {
 
+        $user_id = auth()->user()->id;
+
         $this->validate($request,[
             'solution' => ['required', 'min:2'],
         ]);
@@ -57,7 +61,7 @@ class SubmissionController extends Controller
         $submission->note = $request->input('note');
         $submission->course_id = $request->input('course_id');
         $submission->assessment_id = $request->input('assessment_id');
-        $submission->student_id = $request->input('student_id');
+        $submission->student_id = $user_id;
         $submission->save();
         return redirect('student/assessment/'.$request->input('assessment_id'))->with('success', 'Your submission has been sent successfuly');
     }
@@ -100,9 +104,6 @@ class SubmissionController extends Controller
         $submission = Submission::find($id);
         $submission->solution = $request->input('solution');
         $submission->note = $request->input('note');
-        $submission->course_id = $request->input('course_id');
-        $submission->assessment_id = $request->input('assessment_id');
-        $submission->student_id = $request->input('student_id');
         $submission->save();
         return redirect('student/assessment/'.$request->input('assessment_id'))->with('success', 'Your submission was updated successfully!');
     }
