@@ -75,7 +75,7 @@ class DashboardController extends Controller
          return view('facilitator.dashboard')->with(array('courses'=>$courses, 'submissions'=> $submission));
       }
       else if(auth()->user()->role_id == 1){
-        return "Admin";
+        return view('admin.dashboard');
       }
 
     }
