@@ -17,7 +17,7 @@
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <div class="d-flex justify-content-between align-items-center w-100">
         <strong class="text-gray-dark">{{ $user->first_name .' '. $user->last_name }}</strong>
-          <a href="{{ route('users.edit', ['id'=> $user->id])}}">Edit</a>
+          <a href="{{ route('users.edit', ['id'=> $user->id])}}">View</a>
         </div>
       <span class="d-block"><?php
       if ($user->role_id == 1) {

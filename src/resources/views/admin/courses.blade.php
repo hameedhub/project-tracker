@@ -29,7 +29,7 @@
     <a href="#">View All</a>
   </small>
   @else
-  <p> You don't have an assessment yet! </p>
+  <p> No course found! </p>
   @endif
 </div>  
 
