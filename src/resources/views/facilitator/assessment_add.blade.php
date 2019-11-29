@@ -4,7 +4,7 @@
 
 <div class="my-3 p-3 bg-white rounded shadow-sm">
     <h6 class="border-bottom border-gray pb-2 mb-0">Create Assessment</h6>
-    <form method="POST" action="{{ '../assessment' }}">
+    <form method="POST" action="{{ '../evaluation' }}">
       @csrf
       <div>
         <p></p>

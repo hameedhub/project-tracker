@@ -10,6 +10,9 @@ use App\User;
 
 class CoursesController extends Controller
 {
+    public function __construct(){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -19,12 +22,12 @@ class CoursesController extends Controller
     {
 
          
-        $facilitators = User::all();
+       $facilitators = User::where('role_id', '=', 2)->get();
         $course = DB::table('courses')
         ->join('users', 'users.id', '=', 'courses.facilitator_id')
         ->select('users.first_name', 'users.last_name', 'courses.id', 'courses.title', 'courses.description')
         ->get();
-       return view('admin.pages.courses')->with(array(
+       return view('admin.courses')->with(array(
            'facilitators'=> $facilitators,
            'courses'=> $course
     ));
@@ -37,9 +40,9 @@ class CoursesController extends Controller
      */
     public function create()
     {
-        $facilitators = User::all();
+        $facilitators = User::where('role_id', '=', 2)->get();
         $course = Course::orderBy('created_at', 'desc')->get();
-       return view('admin.pages.course_add')->with(array(
+       return view('admin.course_add')->with(array(
            'facilitators'=> $facilitators,
            'courses'=> $course
     ));
@@ -101,7 +104,7 @@ class CoursesController extends Controller
         ->get();
 
 
-       return view('admin.pages.course_edit')->with(array('action'=> $action, 'course' =>$course, 'facilitators'=> $facilitators));
+       return view('admin.course_edit')->with(array('action'=> $action, 'course' =>$course, 'facilitators'=> $facilitators));
     }
 
     /**
@@ -138,6 +141,6 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

@@ -19,8 +19,14 @@ Route::get('/facilitator/dashboard/{id}', 'Facilitator\DashboardController@index
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/dashboard', 'DashboardController@index');
+Route::get('/profile', 'DashboardController@profile');
 Route::resource('admin/grades', 'Admin\GradesController');
 Route::resource('admin/courses', 'Admin\CoursesController');
-Route::resource('facilitator/assessment', 'Facilitator\AssessmentsController');
+Route::resource('admin/users', 'Admin\UsersController');
+Route::resource('facilitator/evaluation', 'Facilitator\AssessmentsController');
+Route::resource('facilitator/submitted', 'Facilitator\ReportsController');
+Route::resource('facilitator/course', 'Facilitator\CourseController');
 Route::resource('student/registration', 'Student\RegCourseController');
+Route::resource('student/submission', 'Student\SubmissionController');
+Route::resource('student/assessment', 'Student\AssessmentController');

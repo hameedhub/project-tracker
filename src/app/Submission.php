@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Registration extends Model
+class Submission extends Model
 {
-    protected $table = 'registrations';
+    protected $table = 'submissions';
     protected $primaryKey = 'id'; 
 
     public function user(){

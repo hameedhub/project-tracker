@@ -4,13 +4,12 @@ namespace App\Http\Controllers\Student;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Course;
-use App\Registration;
+use App\Assessment;
+use App\Submission;
 use DB;
 
-class RegCourseController extends Controller
+class AssessmentController extends Controller
 {
-
     public function __construct (){
         $this->middleware('auth');
     }
@@ -21,8 +20,15 @@ class RegCourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::orderBy('created_at', 'desc')->get();
-        return view('student.registration')->with('courses', $courses);
+        $user_id = auth()->user()->id;
+        
+        $course = DB::table('registrations')
+        ->join('courses', 'courses.id', '=', 'registrations.student_id')
+        ->where('registrations.student_id',$user_id)
+        ->pluck('registrations.course_id');
+
+        $assessments = Assessment::whereIn('course_id', $course)->orderBy('created_at', 'desc')->get();
+        return view('student.assessment')->with('assessments', $assessments);
     }
 
     /**
@@ -43,22 +49,7 @@ class RegCourseController extends Controller
      */
     public function store(Request $request)
     {
-       
-        $check = Registration::where([
-            'course_id' => $request->input('course_id'),
-            'student_id' => $request->input('student_id')
-        ])->get();
-        if(count($check) == 0){
-            $registration = new Registration();
-            $registration->course_id = $request->input('course_id');
-            $registration->student_id = $request->input('student_id');
-            $registration->save();
-            return redirect('student/registration/'.$request->input('course_id'))->with
-            ('success', 'Course was successfully registered');
-        }else{
-            return redirect('student/registration/'.$request->input('course_id'))->with
-            ('error', 'Opps! You have already registered for this course');
-        }    
+        //
     }
 
     /**
@@ -69,8 +60,16 @@ class RegCourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::find($id);
-        return view('student.registration_apply')->with('course', $course);
+
+        $assessment = Assessment::find($id);
+        $submission = Submission::where([
+            'assessment_id'=> $assessment->id
+        ])->get();
+        
+        return view('student.assessment_view')->with(array(
+            'assessment'=>$assessment,
+            'submission' => $submission
+        ));
     }
 
     /**

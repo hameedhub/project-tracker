@@ -4,9 +4,15 @@ namespace App\Http\Controllers\Admin;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\User;
+use App\Course;
+use App\Assessment;
 use App\Grade;
+use App\Submission;
+use App\Registration;
+use DB;
 
-class GradesController extends Controller
+class UsersController extends Controller
 {
     public function __construct(){
         $this->middleware('auth');
@@ -18,8 +24,8 @@ class GradesController extends Controller
      */
     public function index()
     {
-        $grades = Grade::orderBy('created_at', 'desc')->get();
-        return view('admin.grade')->with('grades', $grades);
+        $users = User::orderBy('created_at', 'desc')->paginate(5);
+        return view('admin.users')->with('users', $users);
     }
 
     /**
@@ -40,18 +46,7 @@ class GradesController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'grade_name' => 'required',
-            'max' => 'required',
-            'min' => 'required'
-        ]);
-
-        $grade = new Grade;
-        $grade->grade_name = $request->input('grade_name');
-        $grade->max = $request->input('max');
-        $grade->min = $request->input('min');
-        $grade->save();
-        return redirect('admin/grades')->with('success', 'Grade was successfully saved');
+        //
     }
 
     /**
@@ -73,11 +68,35 @@ class GradesController extends Controller
      */
     public function edit($id)
     {
-        $action = route('grades.update', ['id' => $id]);
-        $grade = Grade::find($id);
-        $grades = Grade::orderBy('created_at', 'desc')->get();
-       return view('admin.grade_edit')->with(array('grade'=>$grade, 
-       'grades'=>$grades, 'action'=> $action));
+        $data = User::find($id);
+
+        $course = '';
+        $assessment = '';
+
+        if($data->role_id == 2){
+            $course = Course::where('facilitator_id', '=', $data->id)->get();
+            $assessment = Assessment::where('facilitator_id', '=', $data->id)->get();
+
+        }elseif($data->role_id == 3){
+            $reg = DB::table('registrations')
+            ->join('courses', 'courses.id', '=', 'registrations.student_id')
+            ->where('registrations.student_id',$data->id)
+            ->pluck('registrations.course_id');
+             $course = Course::whereIn('id', $reg)->get();
+            $assessment =DB::table('assessments')
+            ->join('reports', 'assessments.id', '=', 'reports.assessment_id')
+            ->join('grades', 'grades.id', '=', 'reports.grade_id')
+            ->where('reports.student_id', $data->id)
+            ->get(); 
+
+        }
+        
+
+        return view('admin.users_edit')->with(
+            array('user' => $data, 
+            'courses'=>$course, 
+            'assessments'=> $assessment)
+        );
     }
 
     /**
@@ -89,12 +108,7 @@ class GradesController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $grade = Grade::find($id);
-        $grade->grade_name = $request->input('grade_name');
-        $grade->max = $request->input('max');
-        $grade->min = $request->input('min');
-        $grade->save();
-        return redirect('admin/grades')->with('success', 'Grade was successfully updated');
+        //
     }
 
     /**
@@ -105,9 +119,6 @@ class GradesController extends Controller
      */
     public function destroy($id)
     {
-        $delete = route('grades.destroy',['id', $id]);
-        $grade = Grade::find($id);
-        $grade->destroy($id);
-        return redirect('admin/grades');
+        //
     }
 }
