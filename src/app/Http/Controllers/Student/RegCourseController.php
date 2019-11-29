@@ -46,12 +46,12 @@ class RegCourseController extends Controller
        
         $check = Registration::where([
             'course_id' => $request->input('course_id'),
-            'student_id' => $request->input('student_id')
+            'student_id' => auth()->user()->id
         ])->get();
         if(count($check) == 0){
             $registration = new Registration();
             $registration->course_id = $request->input('course_id');
-            $registration->student_id = $request->input('student_id');
+            $registration->student_id = auth()->user()->id;
             $registration->save();
             return redirect('student/registration/'.$request->input('course_id'))->with
             ('success', 'Course was successfully registered');

@@ -116,7 +116,7 @@ body {
     <ul class="navbar-nav mr-auto">
       
     </ul>
-    <a class="nav-link" href="../profile" style="color:white">My Account</a>
+  <a class="nav-link" href="{{ url('/profile')}}" style="color:white">My Account</a>
 
       
     <button class="btn btn-outline-default" href="{{ route('logout') }}"
@@ -133,7 +133,7 @@ body {
 
 <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
-  <a class="nav-link active" href="">Dashboard</a>
+  <a class="nav-link active" href="{{url('/dashboard')}}">Dashboard</a>
   <a class="nav-link" href="{{ route('course.index') }}"> Course</a>
     <a class="nav-link" href="{{ route('evaluation.index')}}">Assessment</a>
   <a class="nav-link" href="{{ route('submitted.index') }}">Submission</a>

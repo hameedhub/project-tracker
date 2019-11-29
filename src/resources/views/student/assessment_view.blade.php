@@ -62,7 +62,11 @@
                       <label for="solution" class="col-md-2 col-form-label text-md-right">{{ __('Solution') }}</label>
             
                       <div class="col-md-8">
-                      <textarea id="solution" rows="10" class="form-control @error('solution') is-invalid @enderror" name="solution" required > @if(count($submission)>0){{$submission[0]->solution}}@endif</textarea>
+                      <textarea id="solution" @if(count($submission)>0)
+                        @if($submission[0]->access == 1) {{ 'disabled'}}
+                        @endif
+                         @endif 
+                        rows="10" class="form-control @error('solution') is-invalid @enderror" name="solution" required > @if(count($submission)>0){{$submission[0]->solution}}@endif</textarea>
             
                           @error('solution')
                               <span class="invalid-feedback" role="alert">
@@ -75,7 +79,9 @@
                       <label for="note" class="col-md-2 col-form-label text-md-right">{{ __('Notes') }}</label>
             
                       <div class="col-md-8">
-                          <textarea id="note" rows="3" class="form-control @error('note') is-invalid @enderror" name="note">@if(count($submission)>0){{$submission[0]->note}}@endif</textarea>
+                          <textarea @if(count($submission)>0) @if($submission[0]->access == 1) {{ 'disabled'}}
+                              @endif
+                               @endif  id="note" rows="3" class="form-control @error('note') is-invalid @enderror" name="note">@if(count($submission)>0){{$submission[0]->note}}@endif</textarea>
             
                           @error('note')
                               <span class="invalid-feedback" role="alert">
@@ -107,10 +113,13 @@
                       <div class="col-md-8 offset-md-2">
                           
                         @if (count($submission)>0)
+                        @if($submission[0]->access != 1)
                         {{ method_field('PUT')}}
                         <button type="submit" class="btn btn-primary">
                             {{ __('Update Assessment') }}
                         </button>
+                        @endif
+
                         @else
                         <button type="submit" class="btn btn-primary">
                             {{ __('Submit Assessment') }}

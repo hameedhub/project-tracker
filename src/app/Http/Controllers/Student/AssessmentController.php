@@ -23,7 +23,7 @@ class AssessmentController extends Controller
         $user_id = auth()->user()->id;
         
         $course = DB::table('registrations')
-        ->join('courses', 'courses.id', '=', 'registrations.student_id')
+        ->join('courses', 'courses.id', '=', 'registrations.course_id')
         ->where('registrations.student_id',$user_id)
         ->pluck('registrations.course_id');
 
@@ -63,7 +63,8 @@ class AssessmentController extends Controller
 
         $assessment = Assessment::find($id);
         $submission = Submission::where([
-            'assessment_id'=> $assessment->id
+            'assessment_id'=> $assessment->id,
+            'student_id' => auth()->user()->id
         ])->get();
         
         return view('student.assessment_view')->with(array(

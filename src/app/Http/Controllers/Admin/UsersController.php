@@ -11,6 +11,7 @@ use App\Grade;
 use App\Submission;
 use App\Registration;
 use DB;
+use App\Set;
 
 class UsersController extends Controller
 {
@@ -72,11 +73,15 @@ class UsersController extends Controller
 
         $course = '';
         $assessment = '';
+        $set = Set::all();
 
+        // facilitator
         if($data->role_id == 2){
             $course = Course::where('facilitator_id', '=', $data->id)->get();
             $assessment = Assessment::where('facilitator_id', '=', $data->id)->get();
 
+
+        // student
         }elseif($data->role_id == 3){
             $reg = DB::table('registrations')
             ->join('courses', 'courses.id', '=', 'registrations.student_id')
@@ -88,14 +93,14 @@ class UsersController extends Controller
             ->join('grades', 'grades.id', '=', 'reports.grade_id')
             ->where('reports.student_id', $data->id)
             ->get(); 
-
         }
         
 
         return view('admin.users_edit')->with(
             array('user' => $data, 
             'courses'=>$course, 
-            'assessments'=> $assessment)
+            'assessments'=> $assessment,
+            'sets' => $set)
         );
     }
 
@@ -109,6 +114,13 @@ class UsersController extends Controller
     public function update(Request $request, $id)
     {
         //
+    
+        $user = User::find($id);
+        $user->role_id = $request->input('role_id');
+        $user->set_id = $request->input('set_id');
+        $user->save();
+        return redirect('admin/users/'.$id.'/edit')->with('success', 'User was successfully updated!');
+        
     }
 
     /**
