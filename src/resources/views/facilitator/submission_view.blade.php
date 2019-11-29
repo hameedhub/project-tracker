@@ -3,7 +3,24 @@
 @section('content')
 <div class="my-3 p-3 bg-white rounded shadow-sm">
         {{-- <h6 class="border-bottom border-gray pb-2 mb-0">Available Courses</h6> --}}
-        
+        @if(session('success'))
+        <p></p>
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        <strong> {{session('success')}} </strong>
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                        </button>
+                      </div>
+                         @endif
+                         @if(session('error'))
+                         <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                                <strong> {{session('error')}} </strong>
+                                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                  <span aria-hidden="true">&times;</span>
+                                </button>
+                              </div>
+                 @endif
+
  <div class="accordion" id="accordionExample">
    <div class="card">
      <div class="card-header" id="headingOne">
@@ -74,7 +91,7 @@
                           </div>
                           <div class="form-group row">
                             <br>
-                              <label for="grade_name" class="col-md-2 col-form-label text-md-right">{{ __('Course') }}</label>
+                              <label for="grade_name" class="col-md-2 col-form-label text-md-right">{{ __('Grade Type') }}</label>
                     
                               <div class="col-md-8">
                                   <select id="grade_id" class="form-control @error('grade_id') is-invalid @enderror" name="grade_id" required />
@@ -151,24 +168,6 @@
         </div>
       </div>
  </div>
-
- @if(session('success'))
-<p></p>
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-                <strong> {{session('success')}} </strong>
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                  <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-                 @endif
-                 @if(session('error'))
-                 <div class="alert alert-danger alert-dismissible fade show" role="alert">
-                        <strong> {{session('error')}} </strong>
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                        </button>
-                      </div>
-         @endif
 
  </div>    
 @endsection

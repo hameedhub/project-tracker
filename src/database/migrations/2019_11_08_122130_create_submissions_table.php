@@ -20,6 +20,7 @@ class CreateSubmissionsTable extends Migration
             $table->integer('course_id');
             $table->integer('assessment_id');
             $table->integer('student_id');
+            $table->integer('access')->default('0');
             $table->timestamps();
         });
     }

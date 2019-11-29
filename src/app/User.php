@@ -51,4 +51,7 @@ class User extends Authenticatable
     public function submission(){
         return $this->hasMany('App\Submission');
     }
+    public function set(){
+        return $this->belongsTo('App\Set');
+    }
 }

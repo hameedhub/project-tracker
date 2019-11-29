@@ -20,7 +20,7 @@
         @endforeach
     
         <small class="d-block text-right mt-3">
-          <a href="#">View All</a>
+        
         </small>
         @else
         <p> You don't have an assessment yet! </p>

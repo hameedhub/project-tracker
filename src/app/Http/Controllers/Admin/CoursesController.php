@@ -92,7 +92,7 @@ class CoursesController extends Controller
      */
     public function edit($id)
     {
-        $facilitators = User::all();
+        $facilitators = User::where('role_id', '=', 2)->get();
         $action = route('courses.update', ['id'=> $id]);
         $course = DB::table('courses')
         ->join('users', 'users.id', '=', 'courses.facilitator_id')

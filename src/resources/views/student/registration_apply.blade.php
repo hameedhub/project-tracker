@@ -23,7 +23,6 @@
                 <form method="POST" action="{{ route('registration.store') }}">
                     @csrf
                 <input type="hidden" name="course_id" value="{{ $course->id }}"/>
-                <input type="hidden" name="student_id" value="1" />
                 <button type="submit" class="btn btn-sm btn-success">Appy</button>
             </form>
 

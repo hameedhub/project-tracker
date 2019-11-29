@@ -24,15 +24,15 @@ class ReportsController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $courses = Course::where('facilitator_id', $user_id)->pluck('id');
+        $assessments = Assessment::where('facilitator_id', $user_id)->pluck('id');
         $submission = DB::table('submissions')
                         ->join('users', 'users.id', '=', 'submissions.student_id')
-                        ->join('assessments', 'assessments.id', '=', 'assessment_id')
-                        ->whereIn('submissions.course_id', $courses )
+                        ->join('assessments', 'assessments.id', '=', 'submissions.assessment_id')
+                        ->whereIn('submissions.assessment_id', $assessments )
                         ->select('users.first_name', 'users.last_name',
-                         'assessments.title', 'submissions.id')
+                         'assessments.title', 'submissions.id', 'submissions.access')
                          ->orderBy('submissions.created_at', 'desc')
-                         ->get();
+                         ->paginate(10);
 
         return view('facilitator.submission')->with('submissions', $submission);
     }
@@ -70,8 +70,14 @@ class ReportsController extends Controller
         $report->grade_id = $request->input('grade_id');
         $report->score = $request->input('score');
         $report->remark = $request->input('remark');
-        $report->facilitator_id = 1;
+        $report->facilitator_id = auth()->user()->id;
         $report->save();
+        
+        $submission = Submission::find($request->input('id'));
+        $submission->access = 1;
+        $submission->save();
+
+
         return redirect('facilitator/submitted/'.$request->id)->with(
             'success', 'Grade was successfuly saved');
     }

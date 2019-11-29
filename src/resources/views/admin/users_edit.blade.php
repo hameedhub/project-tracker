@@ -3,7 +3,8 @@
 @section('content')
     <div class="my-3 p-3 bg-white rounded shadow-sm">
 
-            <form>
+      <form method="POST" action="{{ route('users.update', ['id' => $user->id] ) }}">
+        @csrf
                     <div class="form-row">
                       <div class="form-group col-md-6">
                         <label for="first_name">First Name</label>
@@ -61,7 +62,31 @@
                       
                     </div>
                     
-                    <button type="submit" class="btn btn-primary">Update</button>
+                  @if ($user->role_id == 3)
+                  <div class="form-row">
+                    <div class="form-group col-md-6">
+                      <label for="inputState">Set</label>
+                      <select id="inputState" name="set_id" class="form-control" required>
+                      <option value="{{$user->set_id}}" selected ><?php if($user->set_id == 0){
+                        echo '- Please select Set -';
+                      }else {
+                        echo $user->set->title;
+                      } ?></option>
+                          @if (count($sets)> 0)
+                          @foreach ($sets as $set)
+                      <option value="{{$set->id}}">{{$set->title}}</option>  
+                          @endforeach
+                          @endif
+                      </select>
+                    </div>
+                    
+                  </div>
+                  @else
+                          <input type="hidden" name="set_id" value="0" />
+
+                  @endif
+                    {{ method_field('PUT')}}
+                  <button type="submit" class="btn btn-primary">Update</button>
                   </form>
 
     </div>
@@ -138,7 +163,7 @@
     </div>
     @endforeach
     @else
-    <p> No course facilitated! </p>
+    <p> No course record! </p>
     @endif
     </div>
     <div class="my-3 p-3 bg-white rounded shadow-sm">

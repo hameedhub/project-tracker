@@ -8,6 +8,7 @@ use App\User;
 use App\Course;
 use App\Assessment;
 use DB;
+use App\Set;
 
 class DashboardController extends Controller
 {
@@ -29,16 +30,16 @@ class DashboardController extends Controller
     public function index()
     {
       if(auth()->user()->role_id == 0){
-          return "Hello";
+          return view('home');
       }else if(auth()->user()->role_id == 3 ){
 
         $user_id = auth()->user()->id;
         $courses = DB::table('registrations')
-        ->join('courses', 'courses.id', '=', 'registrations.student_id')
+        ->join('courses', 'courses.id', '=', 'registrations.course_id')
         ->where('registrations.student_id',$user_id)
         ->select('courses.title', 'courses.id', 'courses.description')
         ->orderBy('registrations.created_at', 'desc')
-        ->take(3)->get();
+        ->paginate(5);
 
         $course = DB::table('registrations')
         ->join('courses', 'courses.id', '=', 'registrations.student_id')
@@ -51,7 +52,7 @@ class DashboardController extends Controller
         ->whereIn('assessments.course_id',$course)
         ->select('assessments.title', 'assessments.id', 'users.first_name', 'users.last_name')
         ->orderBy('assessments.created_at', 'desc')
-        ->take(3)->get();
+        ->paginate(3);
         
         return view('student.dashboard')->with(
             array('courses'=> $courses,
@@ -62,20 +63,21 @@ class DashboardController extends Controller
         $courses = Course::where('facilitator_id', '=', $user_id)
                     ->orderBy('created_at', 'desc')->take(3)->get();
         
-        $course = Course::where('facilitator_id', $user_id)->pluck('id');
+        $assessments = Assessment::where('facilitator_id', $user_id)->pluck('id');
         $submission = DB::table('submissions')
                     ->join('users', 'users.id', '=', 'submissions.student_id')
                     ->join('assessments', 'assessments.id', '=', 'assessment_id')
-                    ->whereIn('submissions.course_id', $courses )
+                    ->whereIn('submissions.assessment_id', $assessments )
                      ->select('users.first_name', 'users.last_name',
-                    'assessments.title', 'submissions.id')
+                    'assessments.title', 'submissions.id', 'submissions.access')
                     ->orderBy('submissions.created_at', 'desc')
                     ->get();
 
          return view('facilitator.dashboard')->with(array('courses'=>$courses, 'submissions'=> $submission));
       }
       else if(auth()->user()->role_id == 1){
-        return view('admin.dashboard');
+        $sets = Set::orderBy('created_at', 'desc')->paginate(5);
+        return view('admin.dashboard')->with('sets', $sets);
       }
 
     }
