@@ -36,7 +36,7 @@ class DashboardController extends Controller
         $user_id = auth()->user()->id;
         $courses = DB::table('registrations')
         ->join('courses', 'courses.id', '=', 'registrations.course_id')
-        ->where('registrations.student_id',$user_id)
+        ->where(['registrations.student_id'=> $user_id, 'registrations.status'=> 1 ])
         ->select('courses.title', 'courses.id', 'courses.description')
         ->orderBy('registrations.created_at', 'desc')
         ->paginate(5);

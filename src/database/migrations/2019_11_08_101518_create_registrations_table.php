@@ -17,6 +17,7 @@ class CreateRegistrationsTable extends Migration
             $table->bigIncrements('id');
             $table->integer('course_id');
             $table->integer('student_id');
+            $table->integer('status')->default('0');
             $table->timestamps();
         });
     }

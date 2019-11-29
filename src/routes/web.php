@@ -24,6 +24,8 @@ Route::get('/profile', 'DashboardController@profile');
 Route::resource('admin/grades', 'Admin\GradesController');
 Route::resource('admin/courses', 'Admin\CoursesController');
 Route::resource('admin/users', 'Admin\UsersController');
+Route::get('admin/users/{id}/{status}',[
+    'as' => 'change', 'uses' =>  'Admin\UsersController@change']);
 Route::resource('admin/set', 'Admin\SetController');
 Route::resource('facilitator/evaluation', 'Facilitator\AssessmentsController');
 Route::resource('facilitator/submitted', 'Facilitator\ReportsController');
