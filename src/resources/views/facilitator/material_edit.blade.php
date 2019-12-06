@@ -95,7 +95,7 @@
               <button type="submit" class="btn btn-primary">
                   {{ __('Update Material') }}
               </button>
-            <a class="btn btn-success" href="{{ url('/download', $material->path)}}" target="_blank" >Download</a>
+            <a class="btn btn-success" href="{{ url('/download/material', $material->path)}}" target="_blank" >Download</a>
           </div>
       </div>
       

@@ -4,13 +4,11 @@ namespace App\Http\Controllers\Student;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Course;
-use App\Registration;
+use App\Material;
 use DB;
 
-class RegCourseController extends Controller
+class MaterialController extends Controller
 {
-
     public function __construct (){
         $this->middleware('auth');
     }
@@ -21,8 +19,16 @@ class RegCourseController extends Controller
      */
     public function index()
     {
-        $courses = Course::orderBy('created_at', 'desc')->paginate(10);
-        return view('student.registration')->with('courses', $courses);
+        $user_id = auth()->user()->id;
+        $courses = DB::table('registrations')
+        ->join('courses', 'courses.id', '=', 'registrations.course_id')
+        ->where(['registrations.student_id'=> $user_id, 'registrations.status'=> 1 ])
+        ->pluck('courses.id');
+        $materials = Material::whereIn('course_id', $courses)
+        ->orderBy('created_at', 'desc')
+        ->paginate(10);
+
+        return view('student.material')->with('materials', $materials);
     }
 
     /**
@@ -43,22 +49,7 @@ class RegCourseController extends Controller
      */
     public function store(Request $request)
     {
-       
-        $check = Registration::where([
-            'course_id' => $request->input('course_id'),
-            'student_id' => auth()->user()->id
-        ])->get();
-        if(count($check) == 0){
-            $registration = new Registration();
-            $registration->course_id = $request->input('course_id');
-            $registration->student_id = auth()->user()->id;
-            $registration->save();
-            return redirect('student/registration/'.$request->input('course_id'))->with
-            ('success', 'Course was successfully registered');
-        }else{
-            return redirect('student/registration/'.$request->input('course_id'))->with
-            ('error', 'Opps! You have already registered for this course, if you don\'t see it on your dashboard, wait for admin approval');
-        }    
+        //
     }
 
     /**
@@ -69,8 +60,7 @@ class RegCourseController extends Controller
      */
     public function show($id)
     {
-        $course = Course::find($id);
-        return view('student.registration_apply')->with('course', $course);
+        //
     }
 
     /**

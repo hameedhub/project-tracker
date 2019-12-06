@@ -51,7 +51,7 @@
                   @else
                   {{ route('submission.store') }}
                   @endif
-                  ">
+                  "  enctype="multipart/form-data">
                   @csrf
                   <div>
                     <p></p>
@@ -91,17 +91,20 @@
                       </div>
                   </div>
                  
-                      <div class="form-group row">
-                          <label for="note" class="col-md-2 col-form-label text-md-right">{{ __('') }}</label>
+                  <div class="form-group row">
+                    <label for="description" class="col-md-2 col-form-label text-md-right">{{ __('File') }}</label>
                         <div class="col-md-8">
-                          <div class="custom-file">
-                              
-                              <input type="file" class="custom-file-input" id="customFile">
-                              <label class="custom-file-label" for="customFile">Document Upload</label>
-                              
-                            </div>
-                        </div>
-                      </div>
+                               
+                                <label class="custom-file-label" for="validatedCustomFile">Document Upload</label>
+                                <input type="file" class="custom-file-input"class="form-control @error('file') is-invalid @enderror" name="file">
+                            
+                    @error('file')
+                        <span class="invalid-feedback" role="alert">
+                            <strong>{{ $message }}</strong>
+                        </span>
+                    @enderror
+                </div>
+            </div>
                    
                   
                   
@@ -118,6 +121,11 @@
                         <button type="submit" class="btn btn-primary">
                             {{ __('Update Assessment') }}
                         </button>
+                        <?php if($submission[0]->upload !== null){?>
+                          <a class="btn btn-success" href="{{ url('/download/assessment', $submission[0]->upload)}}" target="_blank" >Download</a>
+                        <?php } ?>
+                       
+
                         @endif
 
                         @else

@@ -10,6 +10,9 @@ use DB;
 
 class SubmissionController extends Controller
 {
+    public function __construct (){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -55,15 +58,26 @@ class SubmissionController extends Controller
         $this->validate($request,[
             'solution' => ['required', 'min:2'],
         ]);
+        if($request->hasFile('file')){
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $ext = $request->file('file')->getClientOriginalExtension();
+            $name = $filename.'_'.time().'.'.$ext;
+            $path = $request->file('file')->storeAs('public/assessments', $name);
+
+        }else{
+            $name = null;
+        }
 
         $submission = new Submission();
         $submission->solution = $request->input('solution');
         $submission->note = $request->input('note');
+        $submission->upload = $name;
         $submission->course_id = $request->input('course_id');
         $submission->assessment_id = $request->input('assessment_id');
         $submission->student_id = $user_id;
         $submission->save();
-        return redirect('student/assessment/'.$request->input('assessment_id'))->with('success', 'Your submission has been sent successfuly');
+        return redirect('student/assessment/'.$request->input('assessment_id'))->with('success', 'Your solution has been sent successfuly');
     }
 
     /**
@@ -100,12 +114,23 @@ class SubmissionController extends Controller
         $this->validate($request,[
             'solution' => ['required', 'min:2'],
         ]);
+        if($request->hasFile('file')){
+            $filenameWithExt = $request->file('file')->getClientOriginalName();
+            $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+            $ext = $request->file('file')->getClientOriginalExtension();
+            $name = $filename.'_'.time().'.'.$ext;
+            $path = $request->file('file')->storeAs('public/assessments', $name);
+
+        }
 
         $submission = Submission::find($id);
         $submission->solution = $request->input('solution');
         $submission->note = $request->input('note');
+        if($request->hasFile('file')){
+            $submission->upload = $name;
+           }
         $submission->save();
-        return redirect('student/assessment/'.$request->input('assessment_id'))->with('success', 'Your submission was updated successfully!');
+        return redirect('student/assessment/'.$request->input('assessment_id'))->with('success', 'Your solution was updated successfully!');
     }
 
     /**

@@ -30,7 +30,7 @@ class ReportsController extends Controller
                         ->join('assessments', 'assessments.id', '=', 'submissions.assessment_id')
                         ->whereIn('submissions.assessment_id', $assessments )
                         ->select('users.first_name', 'users.last_name',
-                         'assessments.title', 'submissions.id', 'submissions.access')
+                         'assessments.title', 'submissions.id', 'submissions.access', 'submissions.upload')
                          ->orderBy('submissions.created_at', 'desc')
                          ->paginate(10);
 
@@ -99,7 +99,7 @@ class ReportsController extends Controller
                         ->select('users.first_name', 'users.last_name',
                          'assessments.title', 'assessments.question',
                           'submissions.id', 'submissions.solution', 'submissions.note',
-                          'submissions.student_id', 'submissions.assessment_id',
+                          'submissions.student_id', 'submissions.assessment_id', 'submissions.upload',
                           'submissions.updated_at', 'submissions.created_at')
                          ->get();
         $grade='';

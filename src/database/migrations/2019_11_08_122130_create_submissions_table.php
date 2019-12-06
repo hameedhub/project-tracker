@@ -17,6 +17,7 @@ class CreateSubmissionsTable extends Migration
             $table->bigIncrements('id');
             $table->longText('solution');
             $table->longText('note')->nullable();
+            $table->string('upload')->nullable();
             $table->integer('course_id');
             $table->integer('assessment_id');
             $table->integer('student_id');

@@ -16,7 +16,7 @@
       </a>
       @endforeach
     @else 
-    <p> You have not registered for any course </p>
+    <p><i style="color:red">Note:</i> You have not registered for any course or Courses registered as not been approved! </p>
     @endif
     
     <small class="d-block text-right mt-3">

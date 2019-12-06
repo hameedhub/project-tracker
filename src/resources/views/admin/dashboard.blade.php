@@ -3,9 +3,8 @@
 @section('content')
 <div class="my-3 p-3 bg-white rounded shadow-sm">
 
-    {{-- <h6 class=" border-gray pb-2 mb-0">Courses</h6> --}}
         <div class="border-bottom  ">
-        Class
+          <a href="{{ route('set.create')}}">Classes</a>
         </div>
     
     @if(count($sets)>0)
@@ -27,7 +26,7 @@
   
     
     @else
-    <p> No set created! </p>
+    <p> No available class </p>
     @endif
   </div>  
 @endsection

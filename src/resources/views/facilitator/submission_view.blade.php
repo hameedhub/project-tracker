@@ -48,6 +48,9 @@
      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
        <div class="card-body">
          {{ $submission[0]->solution }}
+         <?php if($submission[0]->upload !== null){?>
+          <br><a class="btn btn-success" href="{{ url('/download/assessment', $submission[0]->upload)}}" target="_blank" >Download File</a>
+        <?php } ?>
        </div>
      </div>
    </div>

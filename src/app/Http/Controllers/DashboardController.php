@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Course;
 use App\Assessment;
+use Auth;
 use DB;
 use App\Set;
 
@@ -30,7 +31,9 @@ class DashboardController extends Controller
     public function index()
     {
       if(auth()->user()->role_id == 0){
-          return view('home');
+        Auth::logout();
+        return redirect('/login')->with('error', 'Sorry you don\'t access to this platform! Contact admin for access');
+      
       }else if(auth()->user()->role_id == 3 ){
 
         $user_id = auth()->user()->id;

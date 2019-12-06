@@ -12,7 +12,7 @@
                       </div>
                       <div class="form-group col-md-6">
                         <label for="last_name">Last Name</label>
-                      <input type="text" class="form-control" value="" id="last_name" value="{{ $user->last_name}}" placeholder="Last Name" disabled>
+                      <input type="text" class="form-control" id="last_name" value="{{ $user->last_name}}" placeholder="Last Name" disabled>
                       </div>
                     </div>
                     <div class="form-row">

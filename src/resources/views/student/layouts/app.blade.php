@@ -138,6 +138,7 @@ body {
     <a class="nav-link" href="{{ route('registration.index')}}"> Course</a>
   <a class="nav-link" href="{{ route('assessment.index')}}">Assessment</a>
   <a class="nav-link" href="{{ route('submission.index')}}">Report</a>
+  <a class="nav-link" href="{{ route('materials.index')}}">Materials</a>
     
   </nav>
 </div>

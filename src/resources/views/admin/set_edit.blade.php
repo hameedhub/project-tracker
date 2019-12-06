@@ -9,7 +9,7 @@
 @endif
 
 <div class="my-3 p-3 bg-white rounded shadow-sm">
-        <h6 class="border-bottom border-gray pb-2 mb-0">Create Set</h6>
+        <h6 class="border-bottom border-gray pb-2 mb-0">Update Set</h6>
         <br>
                 <form method="POST" action="{{ route('set.update', ['id' => $set->id] ) }}">
                         @csrf
