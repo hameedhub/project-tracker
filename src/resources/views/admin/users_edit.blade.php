@@ -156,6 +156,12 @@
       <div class="media-body pb-3 mb-0 small lh-125 border-bottom border-gray">
         <div class="d-flex justify-content-between align-items-center w-100">
         <strong class="text-gray-dark">{{ $course->title }}</strong>
+        <?php
+          if($course->status === 0){?>
+             <a href="{{ route('change', ['reg_id' => $course->reg_id, 'id'=> $user->id] )}}">No Access</a>
+          <?php }else {?>
+          <a href="{{route('change', ['reg_id' => $course->reg_id, 'id'=> $user->id]) }}">Access</a>
+        <?php  } ?> 
          
         </div>
       <span class="d-block">{{ $course->description}}</span>

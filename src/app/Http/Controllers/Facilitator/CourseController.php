@@ -8,6 +8,9 @@ use App\Course;
 
 class CourseController extends Controller
 {
+    public function __construct (){
+        $this->middleware('auth');
+    }
     /**
      * Display a listing of the resource.
      *
@@ -16,7 +19,7 @@ class CourseController extends Controller
     public function index()
     {
         $user_id = auth()->user()->id;
-        $courses = Course::where('facilitator_id', $user_id)->orderBy('created_at', 'desc')->get();
+        $courses = Course::where('facilitator_id', $user_id)->orderBy('created_at', 'desc')->paginate(10);
         return view('facilitator.course')->with('courses', $courses);
     }
 

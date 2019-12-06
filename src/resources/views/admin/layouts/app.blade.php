@@ -138,7 +138,6 @@ body {
   <a class="nav-link" href="{{ route('set.index')}}"> Class </a>
   <a class="nav-link" href="{{ route('courses.index')}}"> Course</a>
   <a class="nav-link" href="{{ route('grades.index')}}">Grade</a>
-    <a class="nav-link" href="#">Notification</a>
   </nav>
 </div>
 

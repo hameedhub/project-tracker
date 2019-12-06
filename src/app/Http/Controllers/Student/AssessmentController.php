@@ -24,7 +24,7 @@ class AssessmentController extends Controller
         
         $course = DB::table('registrations')
         ->join('courses', 'courses.id', '=', 'registrations.course_id')
-        ->where('registrations.student_id',$user_id)
+        ->where(['registrations.student_id'=>$user_id, 'registrations.status'=> 1])
         ->pluck('registrations.course_id');
 
         $assessments = Assessment::whereIn('course_id', $course)->orderBy('created_at', 'desc')->get();

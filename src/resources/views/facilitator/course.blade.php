@@ -20,7 +20,7 @@
     @endforeach
 
     <small class="d-block text-right mt-3">
-      <a href="#">View All</a>
+      {{$courses->links()}}
     </small>
     @else
     <p> No Course Facilitated </p>

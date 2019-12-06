@@ -49,6 +49,17 @@ class UsersController extends Controller
     {
         //
     }
+    public function change($id, $reg_id){
+        $reg = Registration::find($reg_id);
+         if($reg['status'] === 0){
+            $reg->status = 1;
+            $reg->save();
+         }else{
+             $reg->status = 0;
+             $reg->save();
+         }
+       return redirect('admin/users/'.$id.'/edit');
+    }
 
     /**
      * Display the specified resource.
@@ -56,9 +67,10 @@ class UsersController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($id, $status)
     {
-        //
+       
+        
     }
 
     /**
@@ -83,11 +95,19 @@ class UsersController extends Controller
 
         // student
         }elseif($data->role_id == 3){
-            $reg = DB::table('registrations')
-            ->join('courses', 'courses.id', '=', 'registrations.student_id')
+           $reg = DB::table('registrations')
+            ->join('courses', 'courses.id', '=', 'registrations.course_id')
             ->where('registrations.student_id',$data->id)
             ->pluck('registrations.course_id');
-             $course = Course::whereIn('id', $reg)->get();
+
+            $course = DB::table('registrations')
+           ->join('courses', 'courses.id', '=', 'registrations.course_id')
+           ->whereIn('courses.id', $reg)
+           ->select('registrations.student_id','registrations.id as  reg_id', 'registrations.status',
+            'courses.title', 'courses.description'
+           )
+           ->get();
+           
             $assessment =DB::table('assessments')
             ->join('reports', 'assessments.id', '=', 'reports.assessment_id')
             ->join('grades', 'grades.id', '=', 'reports.grade_id')
