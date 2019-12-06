@@ -70,7 +70,7 @@ class DashboardController extends Controller
                     ->whereIn('submissions.assessment_id', $assessments )
                      ->select('users.first_name', 'users.last_name',
                     'assessments.title', 'submissions.id', 'submissions.access')
-                    ->orderBy('submissions.created_at', 'desc')
+                    ->orderBy('submissions.created_at', 'desc')->take(3)
                     ->get();
 
          return view('facilitator.dashboard')->with(array('courses'=>$courses, 'submissions'=> $submission));
@@ -82,7 +82,26 @@ class DashboardController extends Controller
 
     }
     public function profile(){
-      return view('student.profile');
+      if(auth()->user()->role_id == 1){
+        return view('admin.profile');
+      }
+      else if(auth()->user()->role_id == 2){
+        return view('facilitator.profile');
+      }else if(auth()->user()->role_id ==3){
+        return view('student.profile');
+      }
+     
+    }
+    public function update($id, Request $request){
+     
+      $user = User::find($id);
+      $user->first_name = $request->input('first_name');
+      $user->last_name = $request->input('last_name');
+      $user->phone = $request->input('phone');
+      $user->address = $request->input('address');
+      $user->save();
 
+      return back()->with('success', 'Profile was successfully updated!');
+      
     }
 }

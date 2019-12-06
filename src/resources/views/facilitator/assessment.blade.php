@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="my-3 p-3 bg-white rounded shadow-sm">
-        <h6 class="border-bottom border-gray pb-2 mb-0">Created Assessment</h6>
+<h6 class="border-bottom border-gray pb-2 mb-0"><a href="{{ route('evaluation.create')}}">Create Accessment</a></h6>
         
         @if(count($assessments)>0)
         @foreach ($assessments as $assessment)
@@ -19,7 +19,7 @@
         @endforeach
     
         <small class="d-block text-right mt-3">
-          <a href="#">View All</a>
+          {{$assessments->links()}}
         </small>
         @else
         <p> You haven't given an assessment yet! </p>
