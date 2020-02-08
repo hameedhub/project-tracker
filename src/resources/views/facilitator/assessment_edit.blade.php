@@ -47,7 +47,7 @@
           <label for="instruction" class="col-md-2 col-form-label text-md-right">{{ __('Instructions') }}</label>
 
           <div class="col-md-8">
-          <textarea id="instruction" rows="5" class="form-control @error('instruction') is-invalid @enderror" name="instruction" required >{{$assessment->instruction}}</textarea>
+          <textarea id="article-ckeditor" rows="5" class="form-control @error('instruction') is-invalid @enderror" name="instruction" required >{{$assessment->instruction}}</textarea>
 
               @error('instruction')
                   <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
           <label for="question" class="col-md-2 col-form-label text-md-right">{{ __('Question/Task') }}</label>
 
           <div class="col-md-8">
-          <textarea id="question" rows="10" class="form-control @error('question') is-invalid @enderror" name="question" required >{{$assessment->question}}</textarea>
+          <textarea id="article-ckeditor-1" rows="10" class="form-control @error('question') is-invalid @enderror" name="question" required >{{$assessment->question}}</textarea>
 
               @error('question')
                   <span class="invalid-feedback" role="alert">
@@ -94,6 +94,20 @@
           </div>
       </div>
       
+</form>
+
+<form method="POST" action="{{ route('evaluation.destroy', ['id' => $assessment->id] ) }}">
+    @csrf
+
+     {{ method_field('DELETE')}}
+        
+<div class="form-group row mb-0">
+    <div class="col-md-8 offset-md-2">
+        <button type="submit" class="btn btn-danger">
+            {{ __('Delete Assessment') }}
+        </button>
+    </div>
+</div>
 </form>
 
 </div>

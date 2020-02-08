@@ -15,6 +15,14 @@
 //     return view('welcome');
 // });
 
+Route::get('/foo', function () {
+    Artisan::call('storage:link');
+});
+
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
+
 // Route::get('/facilitator/dashboard/{id}', 'Facilitator\DashboardController@index');
 
 Auth::routes();

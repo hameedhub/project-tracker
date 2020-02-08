@@ -16,7 +16,7 @@
 
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
       <div class="card-body">
-       <p> The course title is {{ $course->title}}, the facilitator is </p>
+       <p> The course title is {{ $course->title}}</p>
 
         <p>
                 
@@ -58,7 +58,8 @@
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
       <div class="card-body">
-        {{ $course->description }}
+        <?php echo html_entity_decode($course->description) ?>
+      </p>
       </div>
     </div>
   </div>
@@ -72,7 +73,8 @@
     </div>
     <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
       <div class="card-body">
-        {{ $course->objectives }}
+        <?php echo html_entity_decode($course->objectives); ?>
+      </p>
       </div>
     </div>
   </div>

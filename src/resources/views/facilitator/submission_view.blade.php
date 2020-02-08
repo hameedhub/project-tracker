@@ -33,7 +33,8 @@
  
      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
        <div class="card-body">
-        {{ $submission[0]->question}}
+        <?php echo html_entity_decode( $submission[0]->question); ?>
+       </p>
        </div>
      </div>
    </div>
@@ -47,7 +48,8 @@
      </div>
      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
        <div class="card-body">
-         {{ $submission[0]->solution }}
+         <?php echo html_entity_decode($submission[0]->solution) ?>
+       </p>
        </div>
      </div>
    </div>
@@ -61,7 +63,8 @@
      </div>
      <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
        <div class="card-body">
-         {{ $submission[0]->note }}
+         <?php echo html_entity_decode($submission[0]->note) ?>
+       </p>
        </div>
      </div>
    </div>

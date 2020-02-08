@@ -2,6 +2,17 @@
 
 @section('content')
     <div class="my-3 p-3 bg-white rounded shadow-sm">
+      <form method="POST" action="{{ route('users.destroy', ['id' => $user->id] ) }}">
+        @csrf
+        
+         
+         {{ method_field('DELETE')}}
+             <button type="" class="btn btn-danger">
+                 {{ __('Delete User Account') }}
+             </button>
+           
+          
+       </form>
 
       <form method="POST" action="{{ route('users.update', ['id' => $user->id] ) }}">
         @csrf
@@ -12,7 +23,7 @@
                       </div>
                       <div class="form-group col-md-6">
                         <label for="last_name">Last Name</label>
-                      <input type="text" class="form-control" value="" id="last_name" value="{{ $user->last_name}}" placeholder="Last Name" disabled>
+                      <input type="text" class="form-control" id="last_name" value="{{ $user->last_name }}" placeholder="Last Name" disabled>
                       </div>
                     </div>
                     <div class="form-row">
@@ -108,7 +119,7 @@
     <strong class="text-gray-dark">{{ $course->title }}</strong>
      
     </div>
-  <span class="d-block">{{ $course->description}}</span>
+  {{-- <span class="d-block">{{ $course->description}}</span> --}}
   </div>
 </div>
 @endforeach
@@ -131,7 +142,7 @@
     <strong class="text-gray-dark">{{ $assessment->title }}</strong>
      
     </div>
-  <span class="d-block">{{ $assessment->question}}</span>
+  {{-- <span class="d-block">{{ $assessment->question}}</span> --}}
   </div>
 </div>
 @endforeach
@@ -164,7 +175,7 @@
         <?php  } ?> 
          
         </div>
-      <span class="d-block">{{ $course->description}}</span>
+      {{-- <span class="d-block">{{ $course->description}}</span> --}}
       </div>
     </div>
     @endforeach

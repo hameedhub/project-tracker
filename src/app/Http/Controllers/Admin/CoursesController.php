@@ -141,6 +141,10 @@ class CoursesController extends Controller
      */
     public function destroy($id)
     {
+        $course = Course::find($id);
+        $course->destroy($id);
+
+        return redirect('admin/courses');
         
     }
 }

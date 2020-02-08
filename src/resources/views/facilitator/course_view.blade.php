@@ -16,7 +16,7 @@
  
      <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
        <div class="card-body">
-        {{ $course->description}}
+        <?php echo html_entity_decode($course->description); ?>
        </div>
      </div>
    </div>
@@ -30,7 +30,7 @@
      </div>
      <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
        <div class="card-body">
-         {{ $course->objectives }}
+         <?php echo html_entity_decode($course->objectives) ?>
        </div>
      </div>
    </div>

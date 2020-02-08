@@ -13,7 +13,10 @@
                   <div class="card">
                     <div class="card-body">
                     <h5 class="card-title">{{ $course->title}}</h5>
-                    <p class="card-text">{{ $course->description }}</p>
+                    <p class="card-text">
+                      <?php echo html_entity_decode($course->description) ?>
+                    </p>
+                    </p>
                     <a href="{{route('registration.show', ['id'=> $course->id])}}" class="btn btn-sm btn-success">Apply</a>
                     </div>
                   </div>

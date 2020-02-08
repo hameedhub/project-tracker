@@ -10,7 +10,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
-    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
     
 
     <style>
@@ -83,17 +83,18 @@ body {
   padding-top: .75rem;
   padding-bottom: .75rem;
   font-size: .875rem;
-  color: #6c757d;
+  color: #ffffff;
 }
 
 .nav-underline .nav-link:hover {
-  color: #007bff;
+  color: #8BAABD;
 }
 
 .nav-underline .active {
   font-weight: 500;
-  color: #343a40;
+  color: #007bff;
 }
+
 
 .text-white-50 { color: rgba(255, 255, 255, .5); }
 
@@ -116,10 +117,10 @@ body {
     <ul class="navbar-nav mr-auto">
       
     </ul>
-    <a class="nav-link" href="{{ url('/profile') }}" style="color:white">My Account</a>
+    <a class="nav-link" href="{{ url('/profile')}}" style="color:white">Profile</a>
 
       
-      <button class="btn btn-outline-default" href="{{ route('logout') }}"
+      <button class="btn btn-outline-primary" href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
                                                      document.getElementById('logout-form').submit();">
                                         {{ __('Logout') }}
@@ -134,17 +135,17 @@ body {
 
 <div class="nav-scroller bg-white shadow-sm">
   <nav class="nav nav-underline">
-  <a class="nav-link active" href="{{ url('/dashboard') }}">Dashboard</a>
-    <a class="nav-link" href="{{ route('registration.index')}}"> Course</a>
-  <a class="nav-link" href="{{ route('assessment.index')}}">Assessment</a>
-  <a class="nav-link" href="{{ route('submission.index')}}">Report</a>
+  <a class="nav-link {{ Request::is('dashboard') ? 'active' : '' }}" href="{{ url('/dashboard') }}">Dashboard</a>
+    <a class="nav-link {{ Request::is('student/registration') ? 'active' : '' }}" href="{{ route('registration.index')}}"> Course</a>
+  <a class="nav-link {{ Request::is('student/assessment') ? 'active' : '' }}" href="{{ route('assessment.index')}}">Assessment</a>
+  <a class="nav-link {{ Request::is('student/submission') ? 'active' : '' }}" href="{{ route('submission.index')}}">Report</a>
     
   </nav>
 </div>
 
 <main role="main" class="container">
     <div class="d-flex align-items-center p-3 my-3 text-white-50 bg-purple rounded shadow-sm">
-        <img class="mr-3" src="/docs/4.3/assets/brand/bootstrap-outline.svg" alt="" width="48" height="48">
+        <img class="mr-3" src="{{asset('/icon.png')}}" width="70" height="48">
         <div class="lh-100">
         <h6 class="mb-0 text-white lh-100">{{config('app.name')}} - {{ 'Student'}}</h6>
           <small>Created by <a style="color:grey" href="https://github.com/hameedhub">Dev</a></small>
@@ -166,5 +167,12 @@ body {
 })
        </script>
     <!-- Scripts -->
+    <script src="{{URL::asset('vendor/unisharp/laravel-ckeditor/ckeditor.js')}}"></script>
+    <script>
+      CKEDITOR.replace( 'article-ckeditor' );
+      CKEDITOR.replace( 'article-ckeditor-1' );
+  </script>
+
+  </body>
     
 </html>

@@ -117,6 +117,12 @@ class SetController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Deleting of class / set
+        $set = Set::find($id);
+        $set->destroy($id);
+
+        return redirect('admin/set');
+
+
     }
 }

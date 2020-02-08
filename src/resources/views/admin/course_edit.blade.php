@@ -31,7 +31,7 @@
                             <label for="description" class="col-md-2 col-form-label text-md-right">{{ __('Description') }}</label>
 
                             <div class="col-md-8">
-                            <textarea id="description" rows="5" class="form-control @error('description') is-invalid @enderror" name="description" required >{{ $course[0]->description }}</textarea>
+                            <textarea id="article-ckeditor" rows="5" class="form-control @error('description') is-invalid @enderror" name="description" required >{{ $course[0]->description }}</textarea>
 
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
@@ -44,7 +44,7 @@
                             <label for="objectives" class="col-md-2 col-form-label text-md-right">{{ __('Objectives') }}</label>
 
                             <div class="col-md-8">
-                            <textarea id="objectives" rows="10" class="form-control @error('objectives') is-invalid @enderror" name="objectives" required >{{ $course[0]->objectives }}</textarea>
+                            <textarea id="article-ckeditor-1" rows="10" class="form-control @error('objectives') is-invalid @enderror" name="objectives" required >{{ $course[0]->objectives }}</textarea>
 
                                 @error('objectives')
                                     <span class="invalid-feedback" role="alert">
@@ -84,6 +84,21 @@
                         </div>
                         
                  </form>
+
+
+                 <form method="POST" action="{{ route('courses.destroy', ['id' => $course[0]->id] ) }}">
+                    @csrf
+                    <div class="form-group row mb-0">
+                        <div class="col-md-8 offset-md-2">
+                     
+                     {{ method_field('DELETE')}}
+                         <button type="" class="btn btn-danger">
+                             {{ __('Delete') }}
+                         </button>
+                        </div>
+                    </div>
+                      
+                   </form>
 
 
                 </div>

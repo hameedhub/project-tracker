@@ -32,7 +32,7 @@
                             <label for="description" class="col-md-2 col-form-label text-md-right">{{ __('Description') }}</label>
 
                             <div class="col-md-8">
-                                <textarea id="description" rows="5" class="form-control @error('description') is-invalid @enderror" name="description" required ></textarea>
+                                <textarea id="article-ckeditor" rows="5" class="form-control @error('description') is-invalid @enderror" name="description" required ></textarea>
 
                                 @error('description')
                                     <span class="invalid-feedback" role="alert">
@@ -45,7 +45,7 @@
                             <label for="objectives" class="col-md-2 col-form-label text-md-right">{{ __('Objectives') }}</label>
 
                             <div class="col-md-8">
-                                <textarea id="objectives" rows="7" class="form-control @error('objectives') is-invalid @enderror" name="objectives" required ></textarea>
+                                <textarea id="article-ckeditor-1" rows="7" class="form-control @error('objectives') is-invalid @enderror" name="objectives" required ></textarea>
 
                                 @error('objectives')
                                     <span class="invalid-feedback" role="alert">

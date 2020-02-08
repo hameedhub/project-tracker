@@ -54,10 +54,10 @@ class RegCourseController extends Controller
             $registration->student_id = auth()->user()->id;
             $registration->save();
             return redirect('student/registration/'.$request->input('course_id'))->with
-            ('success', 'Course was successfully registered');
+            ('success', 'Your application is pending admin\'s approval..');
         }else{
             return redirect('student/registration/'.$request->input('course_id'))->with
-            ('error', 'Opps! You have already registered for this course');
+            ('error', 'Opps! You have already applied for this course..');
         }    
     }
 

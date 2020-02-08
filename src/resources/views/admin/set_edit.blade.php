@@ -33,11 +33,22 @@
                                 <button type="submit" class="btn btn-primary">
                                     {{ __('Update') }}
                                 </button>
+                              </div>
                             </div>
-                        </div>
+                            
                         
                  </form>
 
+                 <form method="POST" action="{{ route('set.destroy', ['id' => $set->id] ) }}">
+                 @csrf
+
+                  {{ method_field('DELETE')}}
+                      <button type="" class="btn btn-danger">
+                          {{ __('Delete') }}
+                      </button>
+                  
+                   
+                </form>
 
                 </div>
                

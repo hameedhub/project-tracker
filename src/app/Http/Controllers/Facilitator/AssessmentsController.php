@@ -154,6 +154,11 @@ class AssessmentsController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // Deleting of accessment
+
+        $assessment = Assessment::find($id);
+       
+        $assessment->destroy($id);
+        return redirect('facilitator/evaluation');
     }
 }

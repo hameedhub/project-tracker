@@ -47,7 +47,7 @@
           <label for="instruction" class="col-md-2 col-form-label text-md-right">{{ __('Instructions') }}</label>
 
           <div class="col-md-8">
-              <textarea id="instruction" rows="5" class="form-control @error('instruction') is-invalid @enderror" name="instruction" required ></textarea>
+              <textarea id="article-ckeditor" rows="5" class="form-control @error('instruction') is-invalid @enderror" name="instruction" required ></textarea>
 
               @error('instruction')
                   <span class="invalid-feedback" role="alert">
@@ -60,7 +60,7 @@
           <label for="question" class="col-md-2 col-form-label text-md-right">{{ __('Question/Task') }}</label>
 
           <div class="col-md-8">
-              <textarea id="question" rows="10" class="form-control @error('question') is-invalid @enderror" name="question" required ></textarea>
+              <textarea id="article-ckeditor-1" rows="10" class="form-control @error('question') is-invalid @enderror" name="question" required ></textarea>
 
               @error('question')
                   <span class="invalid-feedback" role="alert">

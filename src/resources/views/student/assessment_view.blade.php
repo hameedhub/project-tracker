@@ -16,7 +16,8 @@
 
     <div id="collapseOne" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
       <div class="card-body">
-        {{$assessment->instruction}}
+        <?php echo html_entity_decode($assessment->instruction) ?>
+      </p>
       </div>
     </div>
   </div>
@@ -30,7 +31,8 @@
     </div>
     <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
       <div class="card-body">
-        {{ $assessment->question }}
+        <?php echo html_entity_decode($assessment->question) ?>
+      </p>
       </div>
     </div>
   </div>
@@ -62,7 +64,7 @@
                       <label for="solution" class="col-md-2 col-form-label text-md-right">{{ __('Solution') }}</label>
             
                       <div class="col-md-8">
-                      <textarea id="solution" @if(count($submission)>0)
+                      <textarea id="article-ckeditor-1" @if(count($submission)>0)
                         @if($submission[0]->access == 1) {{ 'disabled'}}
                         @endif
                          @endif 
@@ -79,7 +81,7 @@
                       <label for="note" class="col-md-2 col-form-label text-md-right">{{ __('Notes') }}</label>
             
                       <div class="col-md-8">
-                          <textarea @if(count($submission)>0) @if($submission[0]->access == 1) {{ 'disabled'}}
+                          <textarea  id="article-ckeditor" @if(count($submission)>0) @if($submission[0]->access == 1) {{ 'disabled'}}
                               @endif
                                @endif  id="note" rows="3" class="form-control @error('note') is-invalid @enderror" name="note">@if(count($submission)>0){{$submission[0]->note}}@endif</textarea>
             
